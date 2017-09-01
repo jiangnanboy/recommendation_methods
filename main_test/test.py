@@ -11,9 +11,9 @@ class Test():
 
 if __name__=='__main__':
     test=Test()
-    test.dataProcess('G:\\python workspace\\recommendation_methods\\data\\ratings.csv',
-                     'G:\\python workspace\\recommendation_methods\\data\\movies.csv',
-                     'G:\\python workspace\\recommendation_methods\\data\\ratingmatrix.csv')
+    #test.dataProcess('G:\\python workspace\\recommendation_methods\\data\\ratings.csv',
+                     #'G:\\python workspace\\recommendation_methods\\data\\movies.csv',
+                     #'G:\\python workspace\\recommendation_methods\\data\\ratingmatrix.csv')
 
 
 

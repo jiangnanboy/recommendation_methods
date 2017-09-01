@@ -18,9 +18,7 @@ class DataProcess():
     def __init__(self,ratingPath,itemPath,savetoPath):
         self.readData(ratingPath,itemPath,savetoPath)
 
-    '''
-    处理原始数据
-    '''
+    #处理原始数据，将评分数据存储
     def readData(self,ratingPath,itemPath,savetoPath):
         print('开始处理数据...')
         df_rating=pd.read_csv(ratingPath,sep='\t',header=None)
@@ -54,24 +52,6 @@ class DataProcess():
         removieItem=list(set(removieItem))
         df_write.drop(df_write.columns[removieItem],axis=1,inplace=True) #inplace=True 直接替换原数组
         df_write.to_csv(savetoPath,index=None)#处理后的数据存入文件中
-
-    '''
-    获取user的评分均值
-    '''
-    def average_userRating(self,userRating):
-        userRating=userRating.astype(float)
-        for i in range(len(userRating)):
-            userRating[i][userRating[i]==0]=sum(userRating[i])/float(len(userRating[i][userRating[i]>0]))
-        return userRating
-
-    '''
-    获取item的评分均值
-    '''
-    def average_itemRating(self,itemRating):
-        itemRating=itemRating.astype(float)
-        for i in range(len(itemRating[0])):
-            itemRating[:,i][itemRating[:,i]==0]=sum(itemRating[:,i])/float(len(itemRating[:,i][itemRating[:,i]>0]))
-        return itemRating
 
 
 
