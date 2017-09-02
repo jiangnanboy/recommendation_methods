@@ -33,8 +33,14 @@ class UserBased():
         return k_simNeighbours
 
     #返回预测计算的评分,k_simNeighbours为k个最相似的用户的数据
-    def getRratingPredict(self,k_simNeighbours):
-        #存放用户未评过分的预测值
+    #rating_1是评分公式1，rating_2是评分公式2
+    def getRatingPredict(self,k_simNeighbours,rating='rating_1'):
+        if rating=='rating_1':
+            ratingPredict=self.ratingPredicting_1
+        elif rating=='rating_2':
+            ratingPredict=self.ratingPredicting_2
+
+        #userPredictRating存放用户未评过分的预测值
         userPredictRating=np.zeros(len(self.user_vec))
         for itemNum in range(self.ncols):
             if self.user_vec[itemNum]==0:
@@ -43,11 +49,12 @@ class UserBased():
                     if k_simNeighbours[userNum,itemNum]>0:
                         simNeighbours.append(k_simNeighbours[userNum])#存储该用户评分不为0的一行记录
                 neighbours=np.array(simNeighbours)
-                userPredictRating[itemNum]=self.ratingPredicting_1(neighbours,itemNum)
+                userPredictRating[itemNum]=ratingPredict(neighbours,itemNum)
         return userPredictRating
 
     #预测评分1，公式：Pu,j=Uv+sum[sim(u,v)(Vj-Vv)]/|sum(sim(u,v)|
     #Uv是用户U的评分均值，sim(u,v)是用户v与用户u的相似度，Vj是用户V对项目j的评分，Vv是用户V的评分均值
+    #neighbours是近邻，itemNum是项目个数
     def ratingPredicting_1(self,neighbours,itemNum):
         score=0
         simSum=0
