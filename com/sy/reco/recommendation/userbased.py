@@ -4,7 +4,6 @@ __author__="yan.shi"
 
 import numpy as np
 import pandas as pd
-from com.sy.reco import similarity
 
 #基于相似user推荐
 class UserBased():
@@ -16,18 +15,18 @@ class UserBased():
         self.user_vec=user_vec
 
     #返回K个最相似的用户
-    def kNeighbours(self,K):
+    def kNeighbours(self,K,simType):
         ratingMatrix=self.ratingMatrix.astype(float)
         self.nrows=len(ratingMatrix)#行数，多少个用户
         self.ncols=len(ratingMatrix[0])#列数，多少个item
         kSimData=np.zeros((self.nrows,self.ncols+1))#存放K个相似的数据，最后一列是存放与目标用户的相似度
-        kSimData[::-1]=ratingMatrix#除最后一列外，将评分数据放入kSimData中
+        kSimData[:,:-1]=ratingMatrix#除最后一列外，将评分数据放入kSimData中
         #计算与目标用户评分向量user_vec最相似用户
         for user in range(self.nrows):
             if np.array_equal(kSimData[user,:-1],self.user_vec):#评分相同
                 kSimData[user,self.ncols]=0.0#最后一列存放相似度
                 continue
-            kSimData[user,self.ncols]=similarity.cosine.similarity(kSimData[user,:-1],self.user_vec)
+            kSimData[user,self.ncols]=simType.similarity(kSimData[user,:-1],self.user_vec)
         #降序排列，截取前k个
         k_simNeighbours=kSimData[kSimData[:,self.ncols].argsort()][::-1][0:K,:]
         return k_simNeighbours
@@ -50,7 +49,7 @@ class UserBased():
                         simNeighbours.append(k_simNeighbours[userNum])#存储该用户评分不为0的一行记录
                 neighbours=np.array(simNeighbours)
                 userPredictRating[itemNum]=ratingPredict(neighbours,itemNum)
-        return userPredictRating
+        return userPredictRating#这时返回的是未评分过的预测值以及评过分的（评过分的被设为0）
 
     #预测评分1，公式：Pu,j=Uv+sum[sim(u,v)(Vj-Vv)]/|sum(sim(u,v)|
     #Uv是用户U的评分均值，sim(u,v)是用户v与用户u的相似度，Vj是用户V对项目j的评分，Vv是用户V的评分均值
@@ -90,27 +89,4 @@ class UserBased():
         elif score < 1:
             return 1.0
         return score
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
