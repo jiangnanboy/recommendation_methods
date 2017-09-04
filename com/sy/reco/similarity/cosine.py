@@ -15,9 +15,9 @@ class Cosine():
         product=0.0
         vec1Len=0.0
         vec2Len=0.0
-        for i in range(len(vec1)):
-            product+=vec1[i]*vec2[i]
-            vec1Len+=vec1[i]**2
-            vec2Len+=vec2[i]**2
-        distance=product/np.sqrt(vec1Len)*np.sqrt(vec2Len)
+        for a,b in zip(vec1,vec2):
+            product+=a*b
+            vec1Len+=a**2
+            vec2Len+=b**2
+        distance=product/np.sqrt(vec1Len*vec2Len)
         return distance

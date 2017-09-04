@@ -55,8 +55,8 @@ class UserBased():
     #Uv是用户U的评分均值，sim(u,v)是用户v与用户u的相似度，Vj是用户V对项目j的评分，Vv是用户V的评分均值
     #neighbours是近邻，itemNum是项目个数
     def ratingPredicting_1(self,neighbours,itemNum):
-        score=0
-        simSum=0
+        score=0.0
+        simSum=0.0
         for i in range(len(neighbours)):
             meanRating=float(neighbours[i][itemNum]-neighbours[i][neighbours[i]>0][:-1].mean())#用户i的评分均值
             score+=neighbours[i][-1]*meanRating

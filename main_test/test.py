@@ -5,6 +5,8 @@ __author__="yan.shi"
 from com.sy.reco.util.dataprocess import DataProcess
 from com.sy.reco.util.readrating import ReadRating
 from com.sy.reco.recommendation.userbased import UserBased
+from com.sy.reco.recommendation.itembased import ItemBased
+from com.sy.reco.recommendation.slopeone import SlopeOne
 from com.sy.reco.similarity.cosine import Cosine
 
 class Test():
@@ -23,12 +25,27 @@ class Test():
         k_simNeighbours=userBased.kNeighbours(10,cosine)
         predictRating=userBased.getRatingPredict(k_simNeighbours)
         print(predictRating)
+    #基于item预测
+    def itemBased(self,ratingMatrix,user_vec):
+        itemBased=ItemBased(ratingMatrix,user_vec)
+        cosine=Cosine()
+        itemBased.itemSimilarityMatrix(cosine)
+        predictRating=itemBased.getRatingPredict(10)
+        print(predictRating)
+    #slopeone预测
+    def slopeOne(self,ratingMatrix,user_vec):
+        slopeone=SlopeOne(ratingMatrix,user_vec)
+        slopeone.itemDeviationMatrix()
+        predictRating=slopeone.getRatingPredict(10)
+        print(predictRating)
 
 if __name__=='__main__':
     test=Test()
     #test.dataProcess('G:\\python workspace\\recommendation_methods\\data\\ratings.csv','G:\\python workspace\\recommendation_methods\\data\\movies.csv','G:\\python workspace\\recommendation_methods\\data\\ratingmatrix.csv')
     ratingMatrix=test.readRatingMatrix('G:\\python workspace\\recommendation_methods\\data\\ratingmatrix.csv')
-    test.userBased(ratingMatrix,ratingMatrix[0])
+    #test.userBased(ratingMatrix,ratingMatrix[0])#第一个用户测试
+    #test.itemBased(ratingMatrix,ratingMatrix[0])
+    test.slopeOne(ratingMatrix,ratingMatrix[0])
 
 
 
