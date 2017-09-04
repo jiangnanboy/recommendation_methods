@@ -4,6 +4,9 @@ __author__="yan.shi"
 
 import numpy as np
 
+'''
+基于用户对项目评分偏差的slopeone推荐
+'''
 class SlopeOne():
     def __init__(self,ratingMatrix,user_vec):
         self.ratingMatrix=ratingMatrix

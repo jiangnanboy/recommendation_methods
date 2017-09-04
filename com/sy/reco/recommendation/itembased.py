@@ -3,7 +3,9 @@
 __author__="yan.shi"
 
 import numpy as np
-
+'''
+基于项目的协同推荐
+'''
 class ItemBased():
     def __init__(self,ratingMatrix,user_vec):
         self.ratingMatrix=ratingMatrix#评分矩阵

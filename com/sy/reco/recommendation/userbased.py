@@ -5,7 +5,9 @@ __author__="yan.shi"
 import numpy as np
 import pandas as pd
 
-#基于相似user推荐
+'''
+基于用户的协同推荐
+'''
 class UserBased():
 
     #ratingMatrix是所有用户的评分矩阵，
