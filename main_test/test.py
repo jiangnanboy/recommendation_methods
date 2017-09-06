@@ -11,6 +11,7 @@ from com.sy.reco.recommendation.itembased import ItemBased
 from com.sy.reco.recommendation.slopeone import SlopeOne
 from com.sy.reco.recommendation.matrix_factorization.lfm import LFM
 from com.sy.reco.recommendation.matrix_factorization.biaslfm import BiasLFM
+from com.sy.reco.recommendation.matrix_factorization.svdpp import SVDPP
 from com.sy.reco.similarity.cosine import Cosine
 
 class Test():
@@ -53,11 +54,16 @@ class Test():
         biasLFm=BiasLFM(ratingMatrix,F,α,λ)
         predictRating=biasLFm.iteration_train(max_iter)
         print(predictRating)
+    #SVDPP
+    def svdpp(self,ratingMatrix,F,α,λ,max_iter):
+        svdPP=SVDPP(ratingMatrix,F,α,λ)
+        predictRating=svdPP.iteration_train(max_iter)
+        print(predictRating)
 
 if __name__=='__main__':
     test=Test()
     ratingMatrix = test.readRatingMatrix('G:\\python workspace\\recommendation_methods\\data\\ratingmatrix.csv')
-    recType=5
+    recType=6
     if recType==1:#userBased
         test.userBased(ratingMatrix,ratingMatrix[0])#第一个用户测试
     elif recType==2:#itemBased
@@ -72,6 +78,10 @@ if __name__=='__main__':
         ratingMatrix = ratingMatrix[0:10, 0:20]
         #ratingMatrix=np.array([[1,3,5,2,4],[3,5,2,3,1],[5,5,4,2,1],[4,5,2,1,3],[4,4,2,3,5]])
         test.biaslfm(ratingMatrix,5,0.001,0.01,1000)#原始评分矩阵，隐类个数，学习速率，正则化参数，迭代次数
+    elif recType==6:#svdpp
+        #ratingMatrix = ratingMatrix[0:10, 0:20]
+        ratingMatrix=np.array([[1,3,5,2,4],[3,5,2,3,1],[5,5,4,2,1],[4,5,2,1,3],[4,4,2,3,5]])
+        test.svdpp(ratingMatrix,5,0.001,0.01,1000)#原始评分矩阵，隐类个数，学习速率，正则化参数，迭代次数
 
 
 

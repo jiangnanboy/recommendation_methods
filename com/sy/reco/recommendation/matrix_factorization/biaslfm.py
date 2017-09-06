@@ -86,12 +86,12 @@ class BiasLFM():
                             self.U[user, f] += self.alpha * (self.I[item, f] * eui - self.λ * self.U[user, f])  # 更新U
                             self.I[item, f] += self.alpha * (self.U[user, f] * eui - self.λ * self.I[item, f])  # 更新I
 
-            cost = 0  # 误差
+            cost = 0  # 训练误差
             for user in range(userSum):
                 for item in range(itemSum):
                     if self.ratingMatrix[user, item] > 0:
                         cost += (1/2)*math.pow(self.ratingMatrix[user, item] - self.predict(user,item), 2)
-                        cost+=(1/2)*self.λ*(math.pow(self.bu[user]),2+math.pow(self.bi[item]),2)
+                        cost+=(1/2)*self.λ*(math.pow(self.bu[user],2)+math.pow(self.bi[item],2))
                         for f in range(self.F):
                             cost += (1 / 2) * self.λ * (math.pow(self.U[user, f], 2) + math.pow(self.I[item, f], 2))
             if cost < convergence:
