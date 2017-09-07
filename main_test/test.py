@@ -12,6 +12,8 @@ from com.sy.reco.recommendation.slopeone import SlopeOne
 from com.sy.reco.recommendation.matrix_factorization.lfm import LFM
 from com.sy.reco.recommendation.matrix_factorization.biaslfm import BiasLFM
 from com.sy.reco.recommendation.matrix_factorization.svdpp import SVDPP
+from com.sy.reco.recommendation.matrix_factorization.als import ALS
+from com.sy.reco.recommendation.matrix_factorization.als_wr import ALSWR
 from com.sy.reco.similarity.cosine import Cosine
 
 class Test():
@@ -59,11 +61,21 @@ class Test():
         svdPP=SVDPP(ratingMatrix,F,α,λ)
         predictRating=svdPP.iteration_train(max_iter)
         print(predictRating)
+    #ALS
+    def als(self,ratingMatrix,F,λ,max_iter):
+        alsRec=ALS(ratingMatrix,F,λ)
+        predictRating=alsRec.iteration_train(max_iter)
+        print(predictRating)
+    #ALSWR
+    def alsWR(self,ratingMatrix,F,λ,α,max_iter):
+        als_wr=ALSWR(ratingMatrix,F,λ,α)
+        predictRating=als_wr.iteration_train(max_iter)
+        print(predictRating)
 
 if __name__=='__main__':
     test=Test()
     ratingMatrix = test.readRatingMatrix('G:\\python workspace\\recommendation_methods\\data\\ratingmatrix.csv')
-    recType=6
+    recType=8
     if recType==1:#userBased
         test.userBased(ratingMatrix,ratingMatrix[0])#第一个用户测试
     elif recType==2:#itemBased
@@ -82,6 +94,13 @@ if __name__=='__main__':
         #ratingMatrix = ratingMatrix[0:10, 0:20]
         ratingMatrix=np.array([[1,3,5,2,4],[3,5,2,3,1],[5,5,4,2,1],[4,5,2,1,3],[4,4,2,3,5]])
         test.svdpp(ratingMatrix,5,0.001,0.01,1000)#原始评分矩阵，隐类个数，学习速率，正则化参数，迭代次数
-
+    elif recType==7:#ALS
+        # ratingMatrix = ratingMatrix[0:10, 0:20]
+        ratingMatrix = np.array([[1, 3, 5, 2, 4], [3, 5, 2, 3, 1], [5, 5, 4, 2, 1], [4, 5, 2, 1, 3], [4, 4, 2, 3, 5]])
+        test.als(ratingMatrix,2,0.01,500)#原始评分矩阵，隐类个数，正则化参数，迭代次数
+    elif recType==8:#ALSWR
+        # ratingMatrix = ratingMatrix[0:10, 0:20]
+        ratingMatrix = np.array([[1, 3, 0, 2, 0], [3, 0, 2,0, 1], [5, 5, 4, 0, 1], [0, 5, 2, 0, 3], [4, 0, 2, 3, 5]])
+        test.alsWR(ratingMatrix,2,0.01,0.5,500)#原始评分矩阵，隐类个数，正则化参数，置信因子，迭代次数
 
 
