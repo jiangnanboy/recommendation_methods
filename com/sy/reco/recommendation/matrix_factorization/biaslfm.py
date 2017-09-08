@@ -105,12 +105,3 @@ class BiasLFM():
                 userItemRating.append(pui)
             predictRating.append(userItemRating)
         return np.round(np.array(predictRating), 0)
-
-
-
-
-
-
-
-
-
