@@ -13,6 +13,11 @@ class ReadRating():
         df_rating=pd.read_csv(ratingPath)
         return df_rating
 
+    #读取item内容特征数据
+    def readItemContent(self,itemContentPath):
+        itemContentMatrix=pd.read_csv(itemContentPath)
+        return itemContentMatrix
+
      #读取item数据
     def readItemData(self,itemPath):
         df_item=pd.read_csv(itemPath)

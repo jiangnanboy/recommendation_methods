@@ -16,14 +16,17 @@ from collections import defaultdict
 class DataProcess():
 
     def __init__(self,ratingPath,itemPath,savetoPath):
-        self.readData(ratingPath,itemPath,savetoPath)
+        item_info,df_write=self.readData(ratingPath,itemPath,savetoPath)
+        self.readItemContent(item_info,df_write,savetoPath)
 
     #处理原始数据，将评分数据存储
     def readData(self,ratingPath,itemPath,savetoPath):
         print('开始处理数据...')
+        #评分数据
         df_rating=pd.read_csv(ratingPath,sep='\t',header=None)
+        #项目列表
         item_info=pd.read_csv(itemPath,sep='|',header=None)
-        #拿到item数据的第一列
+        #拿到item数据的第一列，项目名
         itemList=[item_info[1].tolist()[index]+';'+str(index+1) for index in range(len(item_info[1].tolist()))]
         #item数据大小（多少个item）
         itemSize=len(itemList)
@@ -47,12 +50,33 @@ class DataProcess():
                     tmpItem[df_tmp.ix[k][1]-1]=df_tmp.ix[k][2] #tmpItem存的是评分，下标是item序列-1
                 else:
                     removieItem.append(df_tmp.ix[k][1])#需要删除的item对应的数字序列
-            df_write.loc[i]=[i]+tmpItem #一行数据，用户Id，及item评分
+            df_write.loc[i]=[i]+tmpItem #一行数据，用户Id，及其对item的评分
 
         removieItem=list(set(removieItem))
         df_write.drop(df_write.columns[removieItem],axis=1,inplace=True) #inplace=True 直接替换原数组
-        df_write.to_csv(savetoPath,index=None)#处理后的数据存入文件中
+        #df_write.to_csv(savetoPath,index=None)#处理后的数据存入文件中
+        return item_info,df_write #item_info存储的是关于item的内容属性,df_write存储的是经预处理的评分数据
 
+    #读取和存储关于item内容
+    def readItemContent(self,item_info,df_write,savetoPath):
+        #获得项目名对应的数字
+        itemList=[int(itemNum.split(';')[-1]) for itemNum in df_write.columns[1:] ]#获得所有列名对应的数字,df_write中的第0列是人名，从第1列开始是项目名
+        #这是项目从属的类型，比如未知，动作，冒险等
+        itemKind=['unknown','Action','Adventure','Animation','Children\'s','Comedy','Crime','Documentary',
+              'Drama','Fantasy','Film-Noir','Horror','Musical','Mystery',
+              'Romance','Sci-Fi','Thriller','War','Western']
+        item_kind=pd.DataFrame(columns=[['item_id']+itemKind])
+        start=5
+        count=0
+        for itemNum in itemList:#列名对应的数字
+            item_kind.loc[count]=[itemNum]+item_info.iloc[itemNum-1][start:].tolist()
+            count+=1
+        item_kind.to_csv(savetoPath,index=None)
+
+if __name__=='__main__':
+    datapre=DataProcess('G:\\python workspace\\recommendation_methods\\data\\ratings.csv',
+                        'G:\\python workspace\\recommendation_methods\\data\\movies.csv',
+                        'G:\\python workspace\\recommendation_methods\\data\\moviesContent.csv')
 
 
 
