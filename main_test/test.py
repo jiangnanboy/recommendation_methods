@@ -13,6 +13,7 @@ from com.sy.reco.recommendation.matrix_factorization.lfm import LFM
 from com.sy.reco.recommendation.matrix_factorization.nmf import NMF
 from com.sy.reco.recommendation.matrix_factorization.svdpp import SVDPP
 from com.sy.reco.recommendation.content.contentbased import ContentBased
+from com.sy.reco.recommendation.content.contentregression import ContentRegression
 from com.sy.reco.similarity.cosine import Cosine
 from com.sy.reco.util.dataprocess import DataProcess
 from com.sy.reco.util.readrating import ReadRating
@@ -81,11 +82,18 @@ class Test():
     def contentRec(self,itemsNamesList,itemsFeatures,user_vec):
         content_rec=ContentBased(itemsNamesList,itemsFeatures,user_vec)
         content_rec.getRecItems(10)
+    #contentbased2
+    def contentRegre(self,ratingMatrix,itemsFeatures,user_vec,alpha,λ,max_iter):
+        gression=ContentRegression(ratingMatrix,itemsFeatures,alpha,λ)
+        gression.iteration_train(max_iter)
+        predictRating=gression.recommend(user_vec)
+        print(predictRating)
 
 if __name__=='__main__':
     test=Test()
+    #所有用户的评分矩阵数据，行为用户，列为项目
     ratingMatrix = test.readRatingMatrix('G:\\python workspace\\recommendation_methods\\data\\ratingmatrix.csv')
-    recType=10
+    recType=11
     if recType==1:#userBased
         test.userBased(ratingMatrix,ratingMatrix[0])#第一个用户测试
     elif recType==2:#itemBased
@@ -127,7 +135,15 @@ if __name__=='__main__':
         #item名
         itemsNamesList=list(rating_Matrix.columns[1:])#ratingMatrix第0列是用户列，从1列开始是item列
         #所有item的特征矩阵
-        itemsFeatures=itemContentMatrix.values[:,1:]#itemContentMatrix第0列是item列，其余是item的特征分布
+        itemsFeatures=itemContentMatrix.values[:,1:]#itemContentMatrix第0列是item名列，其余是item的特征分布
         test.contentRec(itemsNamesList,itemsFeatures,ratingMatrix[0])
+    elif recType==11:#contentgression
+        read=ReadRating()
+        # item内容特征矩阵
+        itemContentMatrixPath = 'G:\\python workspace\\recommendation_methods\\data\\moviesContent.csv'
+        itemContentMatrix = read.readItemContent(itemContentMatrixPath)
+        # 所有item的特征矩阵
+        itemsFeatures = itemContentMatrix.values[:, 1:]  # itemContentMatrix第0列是item名列，其余是item的特征分布
+        test.contentRegre(ratingMatrix,itemsFeatures,ratingMatrix[0],0.001,0.01,100)#评分数据矩阵，项目特征矩阵，测试的第0行用户，学习速率，正则化参数，迭代次数
 
 
