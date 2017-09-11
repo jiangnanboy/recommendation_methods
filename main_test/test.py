@@ -14,6 +14,7 @@ from com.sy.reco.recommendation.matrix_factorization.nmf import NMF
 from com.sy.reco.recommendation.matrix_factorization.svdpp import SVDPP
 from com.sy.reco.recommendation.content.contentbased import ContentBased
 from com.sy.reco.recommendation.content.contentregression import ContentRegression
+from com.sy.reco.recommendation.association.associationbased import AssociationBased
 from com.sy.reco.similarity.cosine import Cosine
 from com.sy.reco.util.dataprocess import DataProcess
 from com.sy.reco.util.readrating import ReadRating
@@ -88,12 +89,18 @@ class Test():
         gression.iteration_train(max_iter)
         predictRating=gression.recommend(user_vec)
         print(predictRating)
+    #关联规则
+    def associationrules(self,ratingMatrix,itemNames,user_vec):
+        rules=AssociationBased(ratingMatrix,itemNames)
+        rules.calRules()
+        recoItems=rules.getRecItems(user_vec)
+        print(recoItems)
 
 if __name__=='__main__':
     test=Test()
     #所有用户的评分矩阵数据，行为用户，列为项目
     ratingMatrix = test.readRatingMatrix('G:\\python workspace\\recommendation_methods\\data\\ratingmatrix.csv')
-    recType=11
+    recType=12
     if recType==1:#userBased
         test.userBased(ratingMatrix,ratingMatrix[0])#第一个用户测试
     elif recType==2:#itemBased
@@ -145,5 +152,15 @@ if __name__=='__main__':
         # 所有item的特征矩阵
         itemsFeatures = itemContentMatrix.values[:, 1:]  # itemContentMatrix第0列是item名列，其余是item的特征分布
         test.contentRegre(ratingMatrix,itemsFeatures,ratingMatrix[0],0.001,0.01,100)#评分数据矩阵，项目特征矩阵，测试的第0行用户，学习速率，正则化参数，迭代次数
+    elif recType==12:#associationrules
+        # 评分矩阵
+        ratingMatrixPath = 'G:\\python workspace\\recommendation_methods\\data\\ratingmatrix.csv'
+        read = ReadRating()
+        rating_Matrix = read.readRatingData(ratingMatrixPath)
+        # item名
+        itemsNamesList = list(rating_Matrix.columns[1:])  # ratingMatrix第0列是用户列，从1列开始是item列
+
+        test.associationrules(ratingMatrix,itemsNamesList,ratingMatrix[0])#评分矩阵，item名，第0行的用户
+
 
 
