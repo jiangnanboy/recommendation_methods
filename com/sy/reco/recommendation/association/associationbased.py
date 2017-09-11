@@ -10,6 +10,8 @@ import numpy as np
 置信度：confidence(X->Y)=support(X->Y)/support(X)
 首先计算1-项集的支持度，过滤小于min_support的项，在1-项集中构建2-项集，并计算支持度和过滤，然后计算置信度，过滤小于min_confidence的项
 计算所有的item-item的置信度，构建置信度矩阵。最后利用用户的评分向量与这个置信度矩阵相乘。得到推荐列表，这里不是评分预测
+（这里还可以利用提升度lift(X->Y）来检验是否强关联规则，lift(X->Y)=confidence(X->Y)/support(Y)，lift>1为强关联，lift<=1为
+无效的关联规则
 '''
 class AssociationBased():
 
