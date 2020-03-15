@@ -5,6 +5,13 @@ and on the basis of these to improve, the project uses python and some open sour
 methods include content-based, collaborative filtering, association rules, matrix decomposition and so on.
 The experimental data will come from movielens, ml-100k.
 ****
-### Author:yan.shi
-### E-mail:2229029156@qq.com
-****
+![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/1.png)
+![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/2.png)
+![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/3.png)
+![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/4.png)
+![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/5.png)
+![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/6.png)
+![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/7.png)
+![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/8.png)
+![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/9.png)
+![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/10.png)
