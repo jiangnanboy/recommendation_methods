@@ -5,13 +5,11 @@ and on the basis of these to improve, the project uses python and some open sour
 methods include content-based, collaborative filtering, association rules, matrix decomposition and so on.
 The experimental data will come from movielens, ml-100k.
 ****
-![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/1.png)
-![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/2.png)
-![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/3.png)
-![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/4.png)
-![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/5.png)
-![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/6.png)
-![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/7.png)
-![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/8.png)
-![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/9.png)
-![](https://github.com/jiangnanboy/recommendation_methods/tree/master/image/theory/10.png)
+个性化推荐模型，主要包括als、als_wr、biaslfm、lfm、nmf、svdpp、基于内容、基于内容回归、user-cf、item-cf、slopeone、关联规则以及基于内容和cf的混合等模型。
+get start:main_test/test.py
+* [association推荐](https://github.com/jiangnanboy/recommendation_methods/blob/master/com/sy/reco/recommendation/association)
+* [cf推荐](https://github.com/jiangnanboy/recommendation_methods/blob/master/com/sy/reco/recommendation/cf)
+* [content推荐](https://github.com/jiangnanboy/recommendation_methods/blob/master/com/sy/reco/recommendation/content)
+* [hybird混合推荐](https://github.com/jiangnanboy/recommendation_methods/blob/master/com/sy/reco/recommendation/hybrid)
+* [matrix_factorization矩阵分解推荐](https://github.com/jiangnanboy/recommendation_methods/blob/master/com/sy/reco/recommendation/matrix_factorization)
+
