@@ -6,7 +6,7 @@ methods include content-based, collaborative filtering, association rules, matri
 The experimental data will come from movielens, ml-100k.
 ****
 个性化推荐模型，主要包括als、als_wr、biaslfm、lfm、nmf、svdpp、基于内容、基于内容回归、user-cf、item-cf、slopeone、关联规则以及基于内容和cf的混合等模型。
-get start:main_test/test.py
+get start:[main_test/test.py](https://github.com/jiangnanboy/recommendation_methods/blob/master/main_test/test.py)
 * [association推荐](https://github.com/jiangnanboy/recommendation_methods/blob/master/com/sy/reco/recommendation/association)
 * [cf推荐](https://github.com/jiangnanboy/recommendation_methods/blob/master/com/sy/reco/recommendation/cf)
 * [content推荐](https://github.com/jiangnanboy/recommendation_methods/blob/master/com/sy/reco/recommendation/content)
